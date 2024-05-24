@@ -1,0 +1,1 @@
+__rfs = (lambda f: lambda a: str(f(f)(a)))(lambda f: lambda a: next(iter(a)))
