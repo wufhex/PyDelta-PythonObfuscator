@@ -278,7 +278,6 @@ class StringTransformer(ast.NodeTransformer):
 class ImportTransformer(ast.NodeTransformer):
 	def __init__(self):
 		self.imports = {}
-		self.star_imports = {}
 		super().__init__()
   
 	def visit_Import(self, node):
@@ -317,18 +316,6 @@ class ImportTransformer(ast.NodeTransformer):
 					args=[ast.Constant(value=full_import_path)],
 					keywords=[]
 				)
-			return ast.copy_location(new_node, node)
-		elif node.id in self.star_imports:
-			module = self.star_imports[node.id]
-			new_node = ast.Attribute(
-				value=ast.Call(
-					func=ast.Name(id='__import__', ctx=ast.Load()),
-					args=[ast.Constant(value=module)],
-					keywords=[ast.keyword(arg='fromlist', value=ast.List(elts=[ast.Constant(value=node.id)], ctx=ast.Load()))]
-				),
-				attr=node.id,
-				ctx=node.ctx
-			)
 			return ast.copy_location(new_node, node)
 		return self.generic_visit(node)
 

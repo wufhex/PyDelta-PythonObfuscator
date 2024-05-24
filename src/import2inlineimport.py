@@ -7,12 +7,17 @@ class ImportTransformer(ast.NodeTransformer):
 		self.star_imports = {}
 		super().__init__()
   
+	# Scanning for imports
 	def visit_Import(self, node):
 		for alias in node.names:
 			self.imports[alias.asname or alias.name] = alias.name
 		return None
 
 	def visit_ImportFrom(self, node):
+		# If import uses a wildcard use importlib to get every module class
+		# min version skips these type of imports entirely
+		# Example:
+		# from module import *
 		if node.names[0].name == '*':
 			module = node.module
 			try:
@@ -22,18 +27,23 @@ class ImportTransformer(ast.NodeTransformer):
 						self.star_imports[attr] = module
 			except ImportError:
 				pass
+		# Normal import
 		else:
 			module = node.module
 			for alias in node.names:
 				name = alias.name
 				asname = alias.asname or name
 				self.imports[asname] = f'{module}.{name}'
-		return None
+		return None # Removes original import
 
+	# Adds an `__import__` reference to every function that
+	# requires that module
 	def visit_Name(self, node):
 		if node.id in self.imports:
 			full_import_path = self.imports[node.id]
 			module, _, attr = full_import_path.rpartition('.')
+			# If a sub module is imported alongside the module
+			# import module.alex
 			if module:
 				new_node = ast.Attribute(
 					value=ast.Call(
@@ -44,6 +54,7 @@ class ImportTransformer(ast.NodeTransformer):
 					attr=attr,
 					ctx=node.ctx
 				)
+			# Normal import
 			else:
 				new_node = ast.Call(
 					func=ast.Name(id='__import__', ctx=ast.Load()),

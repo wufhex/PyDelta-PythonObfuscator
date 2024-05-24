@@ -1,3 +1,5 @@
+import random
+
 class RandomUtil:
 	@staticmethod
 	def generate_random_string(length=32):
