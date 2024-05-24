@@ -10,7 +10,7 @@ PyDelta is a Python script designed to obfuscate Python source code, making it m
 * Name Refactoring: Refactors variable and function names to further obfuscate the code.
 
 ## Usage:
-PyDelta was intended to be ran in a browser but it is indeed possible to run it locally.
+PyDelta was intended to run in a browser but it is indeed possible to run it locally.
 
 ### Example Usage:
 ```py
