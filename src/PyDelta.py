@@ -65,10 +65,3 @@ def run_obfuscation(source_code, config: ObfuscationConfig = ObfuscationConfig()
         return result
     except Exception as e:
         return f"Error: {str(e)}"
-    
-with open('cube.py', 'r') as r:
-    c = r.read()
-    print(c)
-    
-with open('cube_o.py', 'w') as w:
-    w = w.write(run_obfuscation(c))
