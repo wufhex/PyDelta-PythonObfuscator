@@ -24,6 +24,7 @@ print('Hello')
 obfuscated_code = run_obfuscation(source_code)
 print(obfuscated_code)
 ```
+Or you can use the online version [here](https://wolfhex.com/pydelta)
 
 ### Parameters:
 * source_code: Source code to obfuscate
