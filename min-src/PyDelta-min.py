@@ -4,7 +4,6 @@ import zlib
 import gzip
 import random
 import base64
-import importlib
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
@@ -289,14 +288,7 @@ class ImportTransformer(ast.NodeTransformer):
 
 	def visit_ImportFrom(self, node):
 		if node.names[0].name == '*':
-			module = node.module
-			try:
-				imported_module = importlib.import_module(module)
-				for attr in dir(imported_module):
-					if not attr.startswith('_'):
-						self.star_imports[attr] = module
-			except ImportError:
-				pass
+			return node
 		else:
 			module = node.module
 			for alias in node.names:
