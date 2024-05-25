@@ -3,6 +3,8 @@ import gzip
 import zlib
 import os
 
+from .runtime_code import RuntimeCode
+
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
@@ -36,9 +38,7 @@ class CodeCompressorAndEncryptor:
 		aes_iv_b64 = base64.b64encode(aes_iv).decode()
 		
 		# Adding decompressor code
-		with open('runtime_code/Decompressor.py', 'r') as decompressor_code_file:
-			decompressor_code = decompressor_code_file.read()
-		
+		decompressor_code = RuntimeCode.decompressor
 		decompressor_code += f"\n{self.data_var_ids[1]} = '{aes_key_b64}'\n{self.data_var_ids[2]} = '{aes_iv_b64}'\n{self.data_var_ids[0]} = '{encrypted_code_b64}'"
 		decompressor_code += f"\nexec({self.decompressor_func_name}({self.data_var_ids[0]}, {self.data_var_ids[1]}, {self.data_var_ids[2]}))"
 		

@@ -1,3 +1,11 @@
+Metadata-Version: 2.1
+Name: pydeltaobfuscator
+Version: 0.1.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: cryptography
+Requires-Dist: argparse
+
 # PyDelta
 
 PyDelta is a Python obfuscator script designed to obfuscate Python source code, making it more difficult to understand and reverse-engineer. PyDelta obfuscates your scripts with multiple layers of protection making it extremely hard for someone to deobfuscate.

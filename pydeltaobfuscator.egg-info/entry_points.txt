@@ -1,0 +1,2 @@
+[console_scripts]
+pydelta-obfuscate = pydelta:obfuscate_cli

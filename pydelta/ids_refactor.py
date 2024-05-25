@@ -1,7 +1,7 @@
 import ast
 
-from reserved_names import Reserved
-from delta_random import RandomUtil
+from .delta_random import RandomUtil
+from .reserved_names import Reserved
 
 class NameVisitor(ast.NodeVisitor):
 	def __init__(self):

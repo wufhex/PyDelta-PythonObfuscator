@@ -3,6 +3,8 @@ import os
 import base64
 import random
 
+from .runtime_code import RuntimeCode
+
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
@@ -83,15 +85,9 @@ class StringEncryptor:
 		
 		ast.fix_missing_locations(new_tree)
 		
-		# Add decryption and settostring code
-		with open('runtime_code/SetToString.py', 'r') as file1:
-			set2str = file1.read()
-
-		with open('runtime_code/StringDecryptCode.py', 'r') as file2:
-			str_dec_code = file2.read()
-		
+		# Add decryption and settostring code		
 		new_code = ast.unparse(new_tree)
-		new_code = f"{set2str}\n{str_dec_code}\n{new_code}"
+		new_code = f"{RuntimeCode.set_to_string}\n{RuntimeCode.dec_code}\n{new_code}"
 		return new_code
 
 class StringTransformer(ast.NodeTransformer):
