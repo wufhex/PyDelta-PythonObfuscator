@@ -1,3 +1,5 @@
+# This should be used only with pyscript
+
 import ast
 import os
 import zlib
