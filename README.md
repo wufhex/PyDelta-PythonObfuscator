@@ -1,6 +1,6 @@
 # PyDelta
 
-PyDelta is a Python script designed to obfuscate Python source code, making it more difficult to understand and reverse-engineer. PyDelta obfuscates your scripts with multiple layers of protection making it extremely hard for someone to deobfuscate.
+PyDelta is a Python obfuscator script designed to obfuscate Python source code, making it more difficult to understand and reverse-engineer. PyDelta obfuscates your scripts with multiple layers of protection making it extremely hard for someone to deobfuscate.
 
 ## Features:
 * Anti-Debugger: Adds anti-debugger code to the source to deter debugging attempts.
