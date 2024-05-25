@@ -1,1 +1,4 @@
 /.vscode
+/dist
+/build
+/pydeltaobfuscator.egg-info
