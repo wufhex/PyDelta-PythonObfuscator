@@ -27,7 +27,7 @@ with open('my_obf_file.py', 'w') as file:
     file.write(obfuscated_code)
 ```
 
-Or you can simply run the pydelta-obfuscate command.
+Or you can simply run the `pydelta-obfuscate` command.
 
 ### Parameters:
 * source_code: Source code to obfuscate
