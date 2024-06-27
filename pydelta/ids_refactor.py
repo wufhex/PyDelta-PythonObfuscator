@@ -128,6 +128,11 @@ class RefactorNames:
 					for target in stmt.targets:
 						if isinstance(target, ast.Name) and target.id in self.mapping:
 							target.id = self.mapping[target.id]
+		elif isinstance(node, ast.Call):
+			for keyword in node.keywords:
+				if keyword.arg in self.mapping:
+					keyword.arg = self.mapping[keyword.arg]
+					
 		for child in ast.iter_child_nodes(node):
 			self._replace_identifiers(child)
 		return ast.unparse(node)
