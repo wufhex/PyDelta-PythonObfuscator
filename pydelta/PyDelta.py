@@ -1,7 +1,6 @@
 # Author: WolfHex
-# Last Update: 5/25/24 1:40 AM
 
-# PyDelta v0.1.0 
+# PyDelta v0.1.1 
 # Annotation string references are currently broken
 
 import argparse
