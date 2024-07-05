@@ -4,6 +4,7 @@
 # Annotation string references are currently broken
 
 import argparse
+import locale
 
 from dataclasses import dataclass
 
@@ -85,7 +86,7 @@ def obfuscate_cli():
 	args = parser.parse_args()
 
 	try:
-		my_encoding = 'iso8859_1'
+		my_encoding = locale.getpreferredencoding()
         	if args.utf-8:
         		my_encoding = 'utf-8'
         	with open(args.input_file, 'r', encoding=my_encoding) as infile:
