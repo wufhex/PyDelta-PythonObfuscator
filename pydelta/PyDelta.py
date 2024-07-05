@@ -78,13 +78,17 @@ def obfuscate_cli():
 	parser.add_argument('--no-refactor-names', action='store_false', help='Disables refactoring variable, function and args names.')
 	parser.add_argument('--no-encrypt-str', action='store_false', help='Disables encrypting strings.')
 	parser.add_argument('--no-compress-encrypt', action='store_false', help='Disables compression and encryption of the code.')
+	parser.add_argument('--no-utf-8', action='store_false', help='Do not use encoding=utf-8 to read input file.')
 	parser.add_argument('--str-encryption-amount', type=int, default=3, help='Amount of times to encrypt strings.')
 	parser.add_argument('--compress-encrypt-amount', type=int, default=30, help='Amount of times to compress and encrypt the code.')
 
 	args = parser.parse_args()
 
 	try:
-		with open(args.input_file, 'r') as infile:
+		my_encoding = 'iso8859_1'
+        	if args.utf-8:
+        		my_encoding = 'utf-8'
+        	with open(args.input_file, 'r', encoding=my_encoding) as infile:
 			source_code = infile.read()
 	except Exception as e:
 		raise Exception(f"Could not read input file: {str(e)}")
