@@ -79,7 +79,7 @@ def obfuscate_cli():
 	parser.add_argument('--no-refactor-names', action='store_false', help='Disables refactoring variable, function and args names.')
 	parser.add_argument('--no-encrypt-str', action='store_false', help='Disables encrypting strings.')
 	parser.add_argument('--no-compress-encrypt', action='store_false', help='Disables compression and encryption of the code.')
-	parser.add_argument('--no-utf-8', action='store_false', help='Do not use encoding=utf-8 to read input file.')
+	parser.add_argument('--utf-8', action='store_false', help='Use encoding=utf-8 to read input file.')
 	parser.add_argument('--str-encryption-amount', type=int, default=3, help='Amount of times to encrypt strings.')
 	parser.add_argument('--compress-encrypt-amount', type=int, default=30, help='Amount of times to compress and encrypt the code.')
 
@@ -87,7 +87,7 @@ def obfuscate_cli():
 
 	try:
 		my_encoding = locale.getpreferredencoding()
-        	if args.utf-8:
+        	if args.utf_8:
         		my_encoding = 'utf-8'
         	with open(args.input_file, 'r', encoding=my_encoding) as infile:
 			source_code = infile.read()
