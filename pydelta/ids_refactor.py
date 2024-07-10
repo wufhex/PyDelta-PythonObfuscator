@@ -44,6 +44,9 @@ class NameVisitor(ast.NodeVisitor):
 				for target in stmt.targets:
 					if isinstance(target, ast.Name):
 						self.class_attrs[node.name].add(target.id)
+			elif isinstance(stmt, ast.AnnAssign):
+				if isinstance(stmt.target, ast.Name):
+					self.class_attrs[node.name].add(stmt.target.id)
 		self.generic_visit(node)
 
 	# Scanning for variable names
@@ -74,8 +77,7 @@ class NameVisitor(ast.NodeVisitor):
 			self.args.add(node.args.vararg.arg)
 		if node.args.kwarg:
 			self.args.add(node.args.kwarg.arg)
-			
-# TODO: Fix annotations
+
 class RefactorNames:
 	def __init__(self):
 		self.mapping = {}
@@ -87,7 +89,7 @@ class RefactorNames:
 		visitor.visit(parsed)
 		self.decorated_funcs = visitor.decorated_funcs
 		self.class_attrs = visitor.class_attrs
-  
+
 		# Refactoring every ids in the visitor arrays
 		for name_set in [visitor.funcs, visitor.classes, visitor.args, visitor.local_vars, visitor.self_attrs]:
 			for name in name_set:
@@ -110,12 +112,16 @@ class RefactorNames:
 		elif isinstance(node, ast.arg):
 			if node.arg in self.mapping:
 				node.arg = self.mapping[node.arg]
+			if node.annotation:
+				self._replace_identifiers(node.annotation)
 		elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
 			if node.name in self.mapping and node.name not in self.decorated_funcs:
 				node.name = self.mapping[node.name]
 			for arg in node.args.args:
 				if arg.arg in self.mapping:
 					arg.arg = self.mapping[arg.arg]
+			if node.returns:
+				self._replace_identifiers(node.returns)
 		elif isinstance(node, ast.ClassDef):
 			if node.name in self.mapping:
 				node.name = self.mapping[node.name]
@@ -128,11 +134,16 @@ class RefactorNames:
 					for target in stmt.targets:
 						if isinstance(target, ast.Name) and target.id in self.mapping:
 							target.id = self.mapping[target.id]
+				elif isinstance(stmt, ast.AnnAssign):
+					if isinstance(stmt.target, ast.Name) and stmt.target.id in self.mapping:
+						stmt.target.id = self.mapping[stmt.target.id]
+					if stmt.annotation:
+						self._replace_identifiers(stmt.annotation)
 		elif isinstance(node, ast.Call):
 			for keyword in node.keywords:
 				if keyword.arg in self.mapping:
 					keyword.arg = self.mapping[keyword.arg]
-					
+
 		for child in ast.iter_child_nodes(node):
 			self._replace_identifiers(child)
 		return ast.unparse(node)
