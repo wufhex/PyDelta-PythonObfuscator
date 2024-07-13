@@ -50,7 +50,7 @@ Or you can simply run the `pydelta-obfuscate` command.
 
 ### Notes
 * This version of PyDelta is still in development and some features may not be fully functional.
-* Python's `__annotations__` attribute is broken and will be fixed in future releases.
+* ~~Python's `__annotations__` attribute is broken and will be fixed in future releases.~~ - Support added by therealOri
 * Runtime code is obfuscated by choice which can make maintaining a little tricky, even if those function will likely remain untouched in future releases a module will be used.
 
 ### License
