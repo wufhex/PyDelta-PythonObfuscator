@@ -1,5 +1,8 @@
 # PyDelta
 
+## Important note
+This project will soon be achived. The original pypi package will soon be deleted but the repository will stay up as a public achive. Why? I made this project for fun a while ago and i just lost intrest in it, but non-related projects will come out soon. A big thanks to everyone that has contributed. 
+
 PyDelta is a Python obfuscator script designed to obfuscate Python source code, making it more difficult to understand and reverse-engineer. PyDelta obfuscates your scripts with multiple layers of protection making it extremely hard for someone to deobfuscate.
 
 ## Features:
